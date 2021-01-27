@@ -1,6 +1,8 @@
 import { ReactComponent as SunnyIcon } from 'assets/icons/sunny.svg';
 import Card from 'components/Card';
 
+import { getCurrentDateAndTime } from 'utils/date';
+
 import * as S from './styles';
 
 function Header() {
@@ -11,7 +13,10 @@ function Header() {
         <S.Column>
           <S.Row>
             <S.CityLabel>Canoas</S.CityLabel>
-            <S.DateTime>Ter 19 Janeiro 01:34h</S.DateTime>
+            <S.DateTime>
+              {getCurrentDateAndTime()}
+              h
+            </S.DateTime>
           </S.Row>
           <S.Row align="bottom">
             <S.Temperature>30°C</S.Temperature>
