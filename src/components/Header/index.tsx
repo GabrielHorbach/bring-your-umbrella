@@ -15,7 +15,7 @@ function Header() {
       <Card>
         <S.Column>
           <S.Row>
-            <S.CityLabel>{city}</S.CityLabel>
+            <S.CityLabel>{city || 'Erro ao buscar cidade'}</S.CityLabel>
             <S.DateTime>
               {getCurrentDateAndTime()}
               h
