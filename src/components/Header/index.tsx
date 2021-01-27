@@ -1,18 +1,21 @@
 import { ReactComponent as SunnyIcon } from 'assets/icons/sunny.svg';
 import Card from 'components/Card';
 
-import { getCurrentDateAndTime } from 'utils/date';
+import useGeolocation from 'services/Geolocation/hooks/useCityFromGeolocation';
+import { getCurrentDateAndTime, getGreetingBasedOnPeriodOfTheDay } from 'utils/date';
 
 import * as S from './styles';
 
 function Header() {
+  const city = useGeolocation();
+
   return (
     <S.Header>
-      <S.Greeting>Bom dia!</S.Greeting>
+      <S.Greeting>{getGreetingBasedOnPeriodOfTheDay()}</S.Greeting>
       <Card>
         <S.Column>
           <S.Row>
-            <S.CityLabel>Canoas</S.CityLabel>
+            <S.CityLabel>{city}</S.CityLabel>
             <S.DateTime>
               {getCurrentDateAndTime()}
               h
