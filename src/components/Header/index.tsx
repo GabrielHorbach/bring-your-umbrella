@@ -9,6 +9,12 @@ import * as S from './styles';
 function Header() {
   const { isLoading, city } = useGeolocation();
 
+  const renderCity = () => {
+    if (isLoading) return 'Buscando cidade...';
+    if (city) return city;
+    return 'Erro ao buscar cidade';
+  };
+
   return (
     <S.Header>
       <S.Greeting>{getGreetingBasedOnPeriodOfTheDay()}</S.Greeting>
@@ -16,8 +22,7 @@ function Header() {
         <S.Column>
           <S.Row>
             <S.CityLabel>
-              {isLoading && 'Buscando cidade...'}
-              {city || 'Erro ao buscar cidade'}
+              {renderCity()}
             </S.CityLabel>
             <S.DateTime>
               {getCurrentDateAndTime()}
