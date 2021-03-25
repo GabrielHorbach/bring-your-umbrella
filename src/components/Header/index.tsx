@@ -7,7 +7,7 @@ import { getCurrentDateAndTime, getGreetingBasedOnPeriodOfTheDay } from 'utils/d
 import * as S from './styles';
 
 function Header() {
-  const city = useGeolocation();
+  const { isLoading, city } = useGeolocation();
 
   return (
     <S.Header>
@@ -15,7 +15,10 @@ function Header() {
       <Card>
         <S.Column>
           <S.Row>
-            <S.CityLabel>{city || 'Erro ao buscar cidade'}</S.CityLabel>
+            <S.CityLabel>
+              {isLoading && 'Buscando cidade...'}
+              {city || 'Erro ao buscar cidade'}
+            </S.CityLabel>
             <S.DateTime>
               {getCurrentDateAndTime()}
               h

@@ -4,6 +4,7 @@ import { GeolocationPosition, GeolocationPositionError } from '../@types';
 import getCity from '..';
 
 export default function useCityFromGeolocation() {
+  const [isLoading, setIsLoading] = useState(true);
   const [city, setCity] = useState('');
 
   useEffect(() => {
@@ -17,14 +18,16 @@ export default function useCityFromGeolocation() {
       const { coords } = position;
       const cityFromAPI = await getCity(coords.latitude, coords.longitude);
       setCity(cityFromAPI);
+      setIsLoading(false);
     };
 
     function error(err: GeolocationPositionError) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
+      setIsLoading(false);
     }
 
     navigator.geolocation.getCurrentPosition(success, error, options);
   }, []);
 
-  return city;
+  return { isLoading, city };
 }
