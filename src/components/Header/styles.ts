@@ -76,6 +76,7 @@ export const Temperature = styled.p`
 export const DayStatus = styled.p`
   font-size: .7rem;
   color: #e3e3e3;
+  text-transform: capitalize;
 `;
 
 export const TomorrowStatus = styled.p`

@@ -4,13 +4,17 @@ import Container from 'components/Container';
 import Header from 'components/Header';
 import Advice from 'components/Advice';
 
+import { WeatherProvider } from 'contexts/WeatherContext';
+
 function App() {
   return (
     <>
       <GlobalStyles />
       <Container>
-        <Header />
-        <Advice />
+        <WeatherProvider>
+          <Header />
+          <Advice />
+        </WeatherProvider>
       </Container>
     </>
   );

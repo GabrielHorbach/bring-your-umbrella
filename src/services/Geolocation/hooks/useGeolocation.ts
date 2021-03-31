@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { GeolocationPosition, GeolocationPositionError } from '../@types';
+import { GeolocationCoordinates, GeolocationPosition, GeolocationPositionError } from '../@types';
 import getCity from '..';
 
-export default function useCityFromGeolocation() {
-  const [isLoading, setIsLoading] = useState(true);
+export default function useGeolocation() {
   const [city, setCity] = useState('');
+  const [coordenates, setCoordenates] = useState<GeolocationCoordinates>({
+    latitude: 0, longitude: 0,
+  });
 
   useEffect(() => {
     const options = {
@@ -17,17 +19,16 @@ export default function useCityFromGeolocation() {
     const success = async (position: GeolocationPosition) => {
       const { coords } = position;
       const cityFromAPI = await getCity(coords.latitude, coords.longitude);
+      setCoordenates(coords);
       setCity(cityFromAPI);
-      setIsLoading(false);
     };
 
     function error(err: GeolocationPositionError) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
-      setIsLoading(false);
     }
 
     navigator.geolocation.getCurrentPosition(success, error, options);
   }, []);
 
-  return { isLoading, city };
+  return { city, coordenates };
 }
