@@ -6,17 +6,14 @@ import useGeolocation from 'services/Geolocation/hooks/useGeolocation';
 import useWeather from 'services/Weather/hooks/useWeather';
 import { getCurrentDateAndTime, getGreetingBasedOnPeriodOfTheDay } from 'utils/date';
 
-import { ReactComponent as SunnyIcon } from 'assets/icons/sunny.svg';
-import { ReactComponent as RainingIcon } from 'assets/icons/raining.svg';
+import { ReactComponent as SunIcon } from 'assets/icons/sun.svg';
+import { ReactComponent as RainIcon } from 'assets/icons/rain.svg';
+import { ReactComponent as CloudIcon } from 'assets/icons/cloud.svg';
+import { ReactComponent as AtmosphereIcon } from 'assets/icons/atmosphere.svg';
+import { ReactComponent as SnowIcon } from 'assets/icons/snow.svg';
 
+import { WEATHER_STATUS } from 'constants/weather';
 import * as S from './styles';
-
-const RAINY_WEATHER = [
-  'Thunderstorm',
-  'Drizzle',
-  'Rain',
-  'Snow',
-];
 
 function Header() {
   const { city, coordenates } = useGeolocation();
@@ -50,14 +47,18 @@ function Header() {
     };
   }, [weather]);
 
-  const icon = useMemo(() => (
-    RAINY_WEATHER.includes(weatherInfo.weatherStatus)
-      ? <RainingIcon />
-      : <SunnyIcon />
-  ), [weatherInfo]);
+  const icon = useMemo(() => {
+    const { weatherStatus: status } = weatherInfo;
+    if (!status) return null;
+    if (WEATHER_STATUS.ATMOSPHERE.includes(status)) return <AtmosphereIcon />;
+    if (WEATHER_STATUS.CLEAR.includes(status)) return <SunIcon />;
+    if (WEATHER_STATUS.CLOUDY.includes(status)) return <CloudIcon />;
+    if (WEATHER_STATUS.RAINY.includes(status)) return <RainIcon />;
+    return <SnowIcon />;
+  }, [weatherInfo]);
 
   useEffect(() => {
-    if (RAINY_WEATHER.includes(weatherInfo.weatherStatus)) setUseUmbrella(true);
+    if (WEATHER_STATUS.RAINY.includes(weatherInfo.weatherStatus)) setUseUmbrella(true);
   }, [weatherInfo]);
 
   return (
