@@ -5,9 +5,9 @@ import getCity from '..';
 
 export default function useGeolocation() {
   const [city, setCity] = useState('');
-  const [coordenates, setCoordenates] = useState<GeolocationCoordinates>({
-    latitude: 0, longitude: 0,
-  });
+  const [coordenates, setCoordenates] = useState<GeolocationCoordinates>(
+    {} as GeolocationCoordinates,
+  );
 
   useEffect(() => {
     const options = {

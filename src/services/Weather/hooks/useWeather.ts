@@ -7,12 +7,13 @@ import { WeatherAPIResponse } from '../@types';
 export default function useWeather(coordenates: GeolocationCoordinates) {
   const [weather, setWeather] = useState<WeatherAPIResponse>();
 
-  const { latitude, longitude } = coordenates;
-
   useEffect(() => {
+    const { latitude, longitude } = coordenates;
+    if (!latitude || !longitude) return;
+
     getWeather(latitude, longitude)
       .then((whetherData) => setWeather(whetherData));
-  }, []);
+  }, [coordenates]);
 
   return weather;
 }
